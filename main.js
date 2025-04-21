@@ -34,6 +34,23 @@ class Tree {
 
         return root;
     }
+
+    insert(value) {
+        function _insert (root, value) {
+            if (root === null) {
+                return new Node(value);
+            }
+
+            if (value < root.data)
+                root.left = _insert(root.left, value);
+            else if (value > root.data)
+                root.right = _insert(root.right, value);
+
+            return root;
+        }
+
+        _insert(this.root, value);
+    }
 }
 
 function prettyPrint(node, prefix = "", isLeft = true) {
@@ -50,4 +67,7 @@ function prettyPrint(node, prefix = "", isLeft = true) {
 };
 
 const tree = new Tree([6, 3, 2, 1, 4, 5]);
+prettyPrint(tree.root);
+tree.insert(16);
+tree.insert(9);
 prettyPrint(tree.root);
