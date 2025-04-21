@@ -18,21 +18,21 @@ class Tree {
         /* Sort */
         array = array.sort();
 
+        function build(array, start, end) {
+            if (start > end)
+                return null;
+    
+            const mid = Math.floor(start + (end - start) / 2)
+    
+            const root = new Node(array[mid]);
+            root.left = build(array, start, mid - 1);
+            root.right = build(array, mid + 1, end);
+    
+            return root;
+        }
+
         /* Build tree and return root */
-        return this.build(array, 0, array.length - 1)
-    }
-
-    build(array, start, end) {
-        if (start > end)
-            return null;
-
-        const mid = Math.floor(start + (end - start) / 2)
-
-        const root = new Node(array[mid]);
-        root.left = this.build(array, start, mid - 1);
-        root.right = this.build(array, mid + 1, end);
-
-        return root;
+        return build(array, 0, array.length - 1)
     }
 
     insert(value) {
