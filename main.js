@@ -53,6 +53,12 @@ class Tree {
     }
 
     deleteItem(value) {
+        function findSuccessor(root) {
+            if(root.left === null) 
+                return root; 
+            
+            return findSuccessor(root.left);
+        }
         function _delete(root, value) {
             /* Base case */
             if(root === null) {
@@ -65,17 +71,25 @@ class Tree {
             else if(value > root.data)
                 root.right = _delete(root.right, value);
             else { /* Found the node */
-                /* Case 1: No child */
-                if(root.left === null && root.right === null)
-                    return null;
+                
+                /* Case: Two children */
+                if(root.left !== null && root.right !== null) {
+                    const successor = findSuccessor(root.right);
+                    root.data = successor.data;
+                    root.right = _delete(root.right, successor.data);
+                    return root;
+                }
 
-                /* Case 2: One child */
+                /* Case: One child */
                 if(root.left !== null)
                     return root.left;
                 if(root.right !== null)
                     return root.right;
 
-                /* Case 3: Two children */
+
+                /* Case: No child */
+                if(root.left === null && root.right === null)
+                    return null;
 
             }
 
@@ -101,9 +115,10 @@ function prettyPrint(node, prefix = "", isLeft = true) {
 };
 
 const tree = new Tree([6, 3, 2, 1, 4, 5]);
-prettyPrint(tree.root);
+// prettyPrint(tree.root);
 tree.insert(16);
 tree.insert(9);
 prettyPrint(tree.root);
-tree.deleteItem(6);
+console.log("===============");
+tree.deleteItem(16);
 prettyPrint(tree.root);
