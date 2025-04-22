@@ -70,6 +70,10 @@ class Tree {
                     return null;
 
                 /* Case 2: One child */
+                if(root.left !== null)
+                    return root.left;
+                if(root.right !== null)
+                    return root.right;
 
                 /* Case 3: Two children */
 
@@ -101,5 +105,5 @@ prettyPrint(tree.root);
 tree.insert(16);
 tree.insert(9);
 prettyPrint(tree.root);
-tree.deleteItem(9);
+tree.deleteItem(6);
 prettyPrint(tree.root);
