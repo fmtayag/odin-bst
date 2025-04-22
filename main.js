@@ -99,6 +99,23 @@ class Tree {
         _delete(this.root, value);
 
     }
+
+    find(value) {
+        function _find(root, value) {
+            if (root === null)
+                return null;
+            if (root.data === value)
+                return root;
+
+            if(value < root.data)
+                return _find(root.left, value);
+            else 
+                return _find(root.right, value);
+
+        }
+
+        return _find(this.root, value);
+    }
 }
 
 function prettyPrint(node, prefix = "", isLeft = true) {
@@ -122,3 +139,5 @@ prettyPrint(tree.root);
 console.log("===============");
 tree.deleteItem(16);
 prettyPrint(tree.root);
+console.log(tree.find(151));
+console.log(tree.find(5));
