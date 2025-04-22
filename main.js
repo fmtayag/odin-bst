@@ -51,6 +51,36 @@ class Tree {
 
         _insert(this.root, value);
     }
+
+    deleteItem(value) {
+        function _delete(root, value) {
+            /* Base case */
+            if(root === null) {
+                return null;
+            }
+
+            /* Traverse */
+            if(value < root.data)
+                root.left = _delete(root.left, value);
+            else if(value > root.data)
+                root.right = _delete(root.right, value);
+            else { /* Found the node */
+                /* Case 1: No child */
+                if(root.left === null && root.right === null)
+                    return null;
+
+                /* Case 2: One child */
+
+                /* Case 3: Two children */
+
+            }
+
+            return root;
+        }
+
+        _delete(this.root, value);
+
+    }
 }
 
 function prettyPrint(node, prefix = "", isLeft = true) {
@@ -70,4 +100,6 @@ const tree = new Tree([6, 3, 2, 1, 4, 5]);
 prettyPrint(tree.root);
 tree.insert(16);
 tree.insert(9);
+prettyPrint(tree.root);
+tree.deleteItem(9);
 prettyPrint(tree.root);
