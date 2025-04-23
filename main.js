@@ -254,6 +254,17 @@ class Tree {
 
         return true;
     }
+
+    rebalance() {
+        if(!this.isBalanced()) {
+            const arr = [];
+            this.inOrder(
+                (item) => arr.push(item)
+            );
+            console.log(arr);
+            this.root = this.buildTree(arr);
+        }
+    }
 }
 
 function prettyPrint(node, prefix = "", isLeft = true) {
@@ -277,7 +288,9 @@ prettyPrint(tree.root);
 console.log("===============");
 // tree.postOrder((item) => console.log(item));
 // console.log(tree.depth(16));
-console.log(tree.isBalanced())
+// console.log(tree.isBalanced())
+tree.rebalance();
+prettyPrint(tree.root);
 // tree.deleteItem(16);
 // prettyPrint(tree.root);
 // console.log(tree.find(151));
