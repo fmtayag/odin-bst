@@ -134,6 +134,54 @@ class Tree {
                 queue.push(currentNode.right);
         } while(queue.length !== 0);
     }
+
+    inOrder(callback) {
+        if(typeof callback !== 'function')
+            throw new Error("Callback must be a function.")
+
+        function call(root) {
+            if(root === null)
+                return; 
+
+            call(root.left);
+            callback(root.data);
+            call(root.right);
+        }
+
+        call(this.root);
+    }
+
+    preOrder(callback) {
+        if(typeof callback !== 'function')
+            throw new Error("Callback must be a function.")
+
+        function call(root) {
+            if(root === null)
+                return; 
+
+            callback(root.data);
+            call(root.left);
+            call(root.right);
+        }
+
+        call(this.root);
+    }
+
+    postOrder(callback) {
+        if(typeof callback !== 'function')
+            throw new Error("Callback must be a function.")
+
+        function call(root) {
+            if(root === null)
+                return; 
+
+            call(root.left);
+            call(root.right);
+            callback(root.data);
+        }
+
+        call(this.root);
+    }
 }
 
 function prettyPrint(node, prefix = "", isLeft = true) {
@@ -155,7 +203,7 @@ tree.insert(16);
 tree.insert(9);
 prettyPrint(tree.root);
 console.log("===============");
-tree.levelOrder((item) => console.log(item));
+tree.postOrder((item) => console.log(item));
 // tree.deleteItem(16);
 // prettyPrint(tree.root);
 // console.log(tree.find(151));
