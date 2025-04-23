@@ -182,6 +182,39 @@ class Tree {
 
         call(this.root);
     }
+
+    height(value) {
+
+        function call(root) {
+            if(root === null)
+                return 0;
+
+            let left = call(root.left) + 1;
+            let right = call(root.right) + 1;
+
+            return Math.max(left, right);
+        }
+
+        const root = this.find(value);
+        if(root === null)
+            return null;
+
+        return call(root) - 1;
+    }
+
+    // depth(value) {
+    //     function call(root) {
+    //         if(root === null)
+    //             return null;
+    //         if(root.data === value) {
+    //             return Math.max(root.left, root.right);
+    //         }
+
+    //         return root.data;
+    //     }
+
+    //     return call(this.root);
+    // }
 }
 
 function prettyPrint(node, prefix = "", isLeft = true) {
@@ -203,7 +236,8 @@ tree.insert(16);
 tree.insert(9);
 prettyPrint(tree.root);
 console.log("===============");
-tree.postOrder((item) => console.log(item));
+// tree.postOrder((item) => console.log(item));
+console.log(tree.height(4));
 // tree.deleteItem(16);
 // prettyPrint(tree.root);
 // console.log(tree.find(151));
