@@ -21,13 +21,13 @@ class Tree {
         function build(array, start, end) {
             if (start > end)
                 return null;
-    
+
             const mid = Math.floor(start + (end - start) / 2)
-    
+
             const root = new Node(array[mid]);
             root.left = build(array, start, mid - 1);
             root.right = build(array, mid + 1, end);
-    
+
             return root;
         }
 
@@ -36,7 +36,7 @@ class Tree {
     }
 
     insert(value) {
-        function call (root, value) {
+        function call(root, value) {
             if (root === null) {
                 return new Node(value);
             }
@@ -54,26 +54,26 @@ class Tree {
 
     deleteItem(value) {
         function findSuccessor(root) {
-            if(root.left === null) 
-                return root; 
-            
+            if (root.left === null)
+                return root;
+
             return findSuccessor(root.left);
         }
         function call(root, value) {
             /* Base case */
-            if(root === null) {
+            if (root === null) {
                 return null;
             }
 
             /* Traverse */
-            if(value < root.data)
+            if (value < root.data)
                 root.left = call(root.left, value);
-            else if(value > root.data)
+            else if (value > root.data)
                 root.right = call(root.right, value);
             else { /* Found the node */
-                
+
                 /* Case: Two children */
-                if(root.left !== null && root.right !== null) {
+                if (root.left !== null && root.right !== null) {
                     const successor = findSuccessor(root.right);
                     root.data = successor.data;
                     root.right = call(root.right, successor.data);
@@ -81,14 +81,14 @@ class Tree {
                 }
 
                 /* Case: One child */
-                if(root.left !== null)
+                if (root.left !== null)
                     return root.left;
-                if(root.right !== null)
+                if (root.right !== null)
                     return root.right;
 
 
                 /* Case: No child */
-                if(root.left === null && root.right === null)
+                if (root.left === null && root.right === null)
                     return null;
 
             }
@@ -107,18 +107,18 @@ class Tree {
             if (root.data === value)
                 return root;
 
-            if(value < root.data)
+            if (value < root.data)
                 return call(root.left, value);
-            else 
+            else
                 return call(root.right, value);
 
         }
 
         return call(this.root, value);
     }
-    
+
     levelOrder(callback) {
-        if(typeof callback !== 'function')
+        if (typeof callback !== 'function')
             throw new Error("Callback must be a function.")
 
         const queue = [this.root];
@@ -128,20 +128,20 @@ class Tree {
             currentNode = queue.shift();
             callback(currentNode.data);
 
-            if(currentNode.left !== null)
+            if (currentNode.left !== null)
                 queue.push(currentNode.left);
-            if(currentNode.right !== null)
+            if (currentNode.right !== null)
                 queue.push(currentNode.right);
-        } while(queue.length !== 0);
+        } while (queue.length !== 0);
     }
 
     inOrder(callback) {
-        if(typeof callback !== 'function')
+        if (typeof callback !== 'function')
             throw new Error("Callback must be a function.")
 
         function call(root) {
-            if(root === null)
-                return; 
+            if (root === null)
+                return;
 
             call(root.left);
             callback(root.data);
@@ -152,12 +152,12 @@ class Tree {
     }
 
     preOrder(callback) {
-        if(typeof callback !== 'function')
+        if (typeof callback !== 'function')
             throw new Error("Callback must be a function.")
 
         function call(root) {
-            if(root === null)
-                return; 
+            if (root === null)
+                return;
 
             callback(root.data);
             call(root.left);
@@ -168,12 +168,12 @@ class Tree {
     }
 
     postOrder(callback) {
-        if(typeof callback !== 'function')
+        if (typeof callback !== 'function')
             throw new Error("Callback must be a function.")
 
         function call(root) {
-            if(root === null)
-                return; 
+            if (root === null)
+                return;
 
             call(root.left);
             call(root.right);
@@ -186,7 +186,7 @@ class Tree {
     height(value) {
 
         function call(root) {
-            if(root === null)
+            if (root === null)
                 return 0;
 
             let left = call(root.left) + 1;
@@ -196,7 +196,7 @@ class Tree {
         }
 
         const root = this.find(value);
-        if(root === null)
+        if (root === null)
             return null;
 
         return call(root) - 1;
@@ -204,22 +204,22 @@ class Tree {
 
     depth(value) {
         function call(root) {
-            if(root === null)
+            if (root === null)
                 return 0;
-            
+
             let left = 0;
             let right = 0;
-            if(value < root.data) {
+            if (value < root.data) {
                 left = call(root.left) + 1;
             }
-            else if(value > root.data) {
+            else if (value > root.data) {
                 right = call(root.right) + 1;
             }
 
             return Math.max(left, right);
         }
 
-        if(this.find(value) === null)
+        if (this.find(value) === null)
             return null;
 
         return call(this.root);
@@ -234,34 +234,33 @@ class Tree {
 
         do {
             currentNode = queue.shift();
-            
-            const heightLeft = currentNode.left !== null 
+
+            const heightLeft = currentNode.left !== null
                 ? this.height(currentNode.left.data)
                 : 0;
-            const heightRight = currentNode.right !== null 
+            const heightRight = currentNode.right !== null
                 ? this.height(currentNode.right.data)
                 : 0;
             const diff = Math.abs(heightLeft - heightRight);
 
-            if(diff > 1) 
+            if (diff > 1)
                 return false;
 
-            if(currentNode.left !== null)
+            if (currentNode.left !== null)
                 queue.push(currentNode.left);
-            if(currentNode.right !== null)
+            if (currentNode.right !== null)
                 queue.push(currentNode.right);
-        } while(queue.length !== 0);
+        } while (queue.length !== 0);
 
         return true;
     }
 
     rebalance() {
-        if(!this.isBalanced()) {
+        if (!this.isBalanced()) {
             const arr = [];
             this.inOrder(
                 (item) => arr.push(item)
             );
-            console.log(arr);
             this.root = this.buildTree(arr);
         }
     }
@@ -280,7 +279,51 @@ function prettyPrint(node, prefix = "", isLeft = true) {
     }
 };
 
-const numbers = Array.from({length: 30}, () => Math.floor(Math.random() * 100));
+function printTraversals(tree) {
+    console.log("Level Order: ");
+    tree.levelOrder((item) => process.stdout.write(item.toString() + " "));
+
+    console.log("\nPre Order: ");
+    tree.preOrder((item) => process.stdout.write(item.toString() + " "));
+
+    console.log("\nIn Order: ");
+    tree.inOrder((item) => process.stdout.write(item.toString() + " "));
+
+    console.log("\nPost Order: ");
+    tree.postOrder((item) => process.stdout.write(item.toString() + " "));
+
+    console.log("\n");
+}
+
+// const numbers = Array.from({length: 30}, () => Math.floor(Math.random() * 20));
+// console.log(numbers);
+
+const numbers = [
+    17, 17, 4, 19, 7, 11, 15, 16, 11,
+    15, 15, 5, 18, 14, 1, 1, 6, 5,
+    8, 14, 9, 7, 5, 7, 8, 1, 14,
+    18, 6, 14
+]
 const tree = new Tree(numbers);
 console.log(`Is balanced? ${tree.isBalanced()}`);
-console.log(`Level Order: ${tree.levelOrder((item) => item)}`);
+
+printTraversals(tree);
+
+console.log("Adding numbers to unbalance...");
+tree.insert(21);
+tree.insert(50);
+tree.insert(22);
+tree.insert(65);
+tree.insert(72);
+tree.insert(10);
+
+console.log(`Is balanced? ${tree.isBalanced()}`);
+
+console.log("Rebalancing...");
+tree.rebalance();
+
+console.log(`Is balanced? ${tree.isBalanced()}`);
+
+printTraversals(tree);
+
+prettyPrint(tree.root);
