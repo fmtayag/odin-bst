@@ -36,20 +36,20 @@ class Tree {
     }
 
     insert(value) {
-        function _insert (root, value) {
+        function call (root, value) {
             if (root === null) {
                 return new Node(value);
             }
 
             if (value < root.data)
-                root.left = _insert(root.left, value);
+                root.left = call(root.left, value);
             else if (value > root.data)
-                root.right = _insert(root.right, value);
+                root.right = call(root.right, value);
 
             return root;
         }
 
-        _insert(this.root, value);
+        call(this.root, value);
     }
 
     deleteItem(value) {
@@ -59,7 +59,7 @@ class Tree {
             
             return findSuccessor(root.left);
         }
-        function _delete(root, value) {
+        function call(root, value) {
             /* Base case */
             if(root === null) {
                 return null;
@@ -67,16 +67,16 @@ class Tree {
 
             /* Traverse */
             if(value < root.data)
-                root.left = _delete(root.left, value);
+                root.left = call(root.left, value);
             else if(value > root.data)
-                root.right = _delete(root.right, value);
+                root.right = call(root.right, value);
             else { /* Found the node */
                 
                 /* Case: Two children */
                 if(root.left !== null && root.right !== null) {
                     const successor = findSuccessor(root.right);
                     root.data = successor.data;
-                    root.right = _delete(root.right, successor.data);
+                    root.right = call(root.right, successor.data);
                     return root;
                 }
 
@@ -96,25 +96,25 @@ class Tree {
             return root;
         }
 
-        _delete(this.root, value);
+        call(this.root, value);
 
     }
 
     find(value) {
-        function _find(root, value) {
+        function call(root, value) {
             if (root === null)
                 return null;
             if (root.data === value)
                 return root;
 
             if(value < root.data)
-                return _find(root.left, value);
+                return call(root.left, value);
             else 
-                return _find(root.right, value);
+                return call(root.right, value);
 
         }
 
-        return _find(this.root, value);
+        return call(this.root, value);
     }
     
     levelOrder(callback) {
