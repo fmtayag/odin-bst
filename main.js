@@ -16,7 +16,7 @@ class Tree {
         array = [...new Set(array)];
 
         /* Sort */
-        array = array.sort();
+        array = array.sort((a, b) => a - b);
 
         function build(array, start, end) {
             if (start > end)
