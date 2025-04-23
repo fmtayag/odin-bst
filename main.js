@@ -116,6 +116,24 @@ class Tree {
 
         return _find(this.root, value);
     }
+    
+    levelOrder(callback) {
+        if(typeof callback !== 'function')
+            throw new Error("Callback must be a function.")
+
+        const queue = [this.root];
+        let currentNode = null;
+
+        do {
+            currentNode = queue.shift();
+            callback(currentNode.data);
+
+            if(currentNode.left !== null)
+                queue.push(currentNode.left);
+            if(currentNode.right !== null)
+                queue.push(currentNode.right);
+        } while(queue.length !== 0);
+    }
 }
 
 function prettyPrint(node, prefix = "", isLeft = true) {
@@ -137,7 +155,8 @@ tree.insert(16);
 tree.insert(9);
 prettyPrint(tree.root);
 console.log("===============");
-tree.deleteItem(16);
-prettyPrint(tree.root);
-console.log(tree.find(151));
-console.log(tree.find(5));
+tree.levelOrder((item) => console.log(item));
+// tree.deleteItem(16);
+// prettyPrint(tree.root);
+// console.log(tree.find(151));
+// console.log(tree.find(5));
