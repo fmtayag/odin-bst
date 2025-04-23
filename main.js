@@ -224,6 +224,36 @@ class Tree {
 
         return call(this.root);
     }
+
+    isBalanced() {
+        /* Use levelOrder and run the height() function on each */
+        /* Use iterative */
+
+        const queue = [this.root];
+        let currentNode = null;
+
+        do {
+            currentNode = queue.shift();
+            
+            const heightLeft = currentNode.left !== null 
+                ? this.height(currentNode.left.data)
+                : 0;
+            const heightRight = currentNode.right !== null 
+                ? this.height(currentNode.right.data)
+                : 0;
+            const diff = Math.abs(heightLeft - heightRight);
+
+            if(diff > 1) 
+                return false;
+
+            if(currentNode.left !== null)
+                queue.push(currentNode.left);
+            if(currentNode.right !== null)
+                queue.push(currentNode.right);
+        } while(queue.length !== 0);
+
+        return true;
+    }
 }
 
 function prettyPrint(node, prefix = "", isLeft = true) {
@@ -246,7 +276,8 @@ tree.insert(9);
 prettyPrint(tree.root);
 console.log("===============");
 // tree.postOrder((item) => console.log(item));
-console.log(tree.depth(16));
+// console.log(tree.depth(16));
+console.log(tree.isBalanced())
 // tree.deleteItem(16);
 // prettyPrint(tree.root);
 // console.log(tree.find(151));
