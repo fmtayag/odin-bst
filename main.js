@@ -202,19 +202,28 @@ class Tree {
         return call(root) - 1;
     }
 
-    // depth(value) {
-    //     function call(root) {
-    //         if(root === null)
-    //             return null;
-    //         if(root.data === value) {
-    //             return Math.max(root.left, root.right);
-    //         }
+    depth(value) {
+        function call(root) {
+            if(root === null)
+                return 0;
+            
+            let left = 0;
+            let right = 0;
+            if(value < root.data) {
+                left = call(root.left) + 1;
+            }
+            else if(value > root.data) {
+                right = call(root.right) + 1;
+            }
 
-    //         return root.data;
-    //     }
+            return Math.max(left, right);
+        }
 
-    //     return call(this.root);
-    // }
+        if(this.find(value) === null)
+            return null;
+
+        return call(this.root);
+    }
 }
 
 function prettyPrint(node, prefix = "", isLeft = true) {
@@ -237,7 +246,7 @@ tree.insert(9);
 prettyPrint(tree.root);
 console.log("===============");
 // tree.postOrder((item) => console.log(item));
-console.log(tree.height(4));
+console.log(tree.depth(16));
 // tree.deleteItem(16);
 // prettyPrint(tree.root);
 // console.log(tree.find(151));
