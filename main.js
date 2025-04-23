@@ -280,18 +280,7 @@ function prettyPrint(node, prefix = "", isLeft = true) {
     }
 };
 
-const tree = new Tree([6, 3, 2, 1, 4, 5]);
-// prettyPrint(tree.root);
-tree.insert(16);
-tree.insert(9);
-prettyPrint(tree.root);
-console.log("===============");
-// tree.postOrder((item) => console.log(item));
-// console.log(tree.depth(16));
-// console.log(tree.isBalanced())
-tree.rebalance();
-prettyPrint(tree.root);
-// tree.deleteItem(16);
-// prettyPrint(tree.root);
-// console.log(tree.find(151));
-// console.log(tree.find(5));
+const numbers = Array.from({length: 30}, () => Math.floor(Math.random() * 100));
+const tree = new Tree(numbers);
+console.log(`Is balanced? ${tree.isBalanced()}`);
+console.log(`Level Order: ${tree.levelOrder((item) => item)}`);
